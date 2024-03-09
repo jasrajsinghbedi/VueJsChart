@@ -141,9 +141,18 @@ const searchDeviceStatus = async ({ deviceId, startDate, endDate }) => {
 };
 
 const fetchDevices = async () => {
-  const response = await fetch(`${serverUrl}/devices`);
-  const body = await response.json();
-  deviceList.value = body;
+  try {
+    const response = await fetch(`http://localhost:8080/devices`);
+    
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const body = await response.json();
+    deviceList.value = body;
+  } catch (error) {
+    alert('Error fetching devices:' +  error);
+  }
   // THE MOCK DATA BEING RETURNED
   // deviceList.value = [{
   //   "id": "demo_t_afm16",

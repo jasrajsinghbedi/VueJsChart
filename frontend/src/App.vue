@@ -9,12 +9,16 @@
     <div>
       <DeviceStatusChart />
     </div>
+    <div>
+      <DeviceStatusPercentageChart />
+    </div>
   </main>
 </template>
 
 <script setup>
-import SearchDeviceStatus from './components/SearchDeviceStatus.vue';
-import DeviceStatusChart from './components/DeviceStatusChart.vue'
+  import SearchDeviceStatus from './components/SearchDeviceStatus.vue';
+  import DeviceStatusChart from './components/DeviceStatusChart.vue';
+  import DeviceStatusPercentageChart from './components/DeviceStatusPercentageChart.vue';
 </script>
 
 <style scoped>
