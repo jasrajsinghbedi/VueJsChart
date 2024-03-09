@@ -4,7 +4,7 @@
   </header>
   <main>
     <div>
-      <SearchDeviceStatus />
+      <Search />
     </div>
 
     <div>
@@ -19,13 +19,13 @@
 </template>
 
 <script setup>
-  import SearchDeviceStatus from './components/SearchDeviceStatus.vue';
+  import Search from './components/Search.vue';
   import DevicePowerChart from './components/DevicePowerChart.vue';
   import DeviceStatusChart from './components/DeviceStatusChart.vue';
   import SelectedChart from './components/SelectedChart.vue';
-  import { ref, shallowRef } from 'vue';
+  import { shallowRef } from 'vue';
   
-  let selectedChartComponent = shallowRef(null);
+  let selectedChartComponent = shallowRef(DevicePowerChart);
 
   const handleChartChanged = (newChart) => {
     switch (newChart) {
@@ -43,4 +43,4 @@
 </script>
 
 <style scoped>
-</style>
+</style>./components/Search.vue

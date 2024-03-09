@@ -13,9 +13,7 @@
 
   const { deviceStatus } = useDevices();
   const hasData = computed(() => deviceStatus?.value?.length > 0);
-
-  const { selectedChart: propSelectedChart } = defineProps(['selectedChart']);
-  const selectedChart = ref(propSelectedChart);
+  const selectedChart = ref('powerChart');
   const emits = defineEmits();
 
   watch(selectedChart, (newValue) => {
