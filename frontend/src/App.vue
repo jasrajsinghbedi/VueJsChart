@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Device Statuses</h1>
+    <h1>Guidewheel Dashboard</h1>
   </header>
   <main>
     <div>
@@ -11,7 +11,7 @@
       <SelectedChart @chartChanged="handleChartChanged" />
     </div>
 
-    <div>
+    <div class = "chart">
       <component :is="selectedChartComponent" />
     </div>
 
@@ -43,4 +43,4 @@
 </script>
 
 <style scoped>
-</style>./components/Search.vue
+</style>
