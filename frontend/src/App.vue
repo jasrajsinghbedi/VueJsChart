@@ -11,7 +11,7 @@
       <SelectedChart @chartChanged="handleChartChanged" />
     </div>
 
-    <div class = "chart">
+    <div v-if="hasChartData" class = "chart">
       <component :is="selectedChartComponent" />
     </div>
 
@@ -24,6 +24,9 @@
   import DeviceStatusChart from './components/DeviceStatusChart.vue';
   import SelectedChart from './components/SelectedChart.vue';
   import { shallowRef } from 'vue';
+  import useDevices from '@/compositions/useDevices';
+
+  const { hasChartData } = useDevices();
   
   let selectedChartComponent = shallowRef(DevicePowerChart);
 
@@ -43,4 +46,7 @@
 </script>
 
 <style scoped>
+  .chart {
+    border: 1px solid #151515;
+  }
 </style>

@@ -9,7 +9,7 @@
 
 <script setup>
   import useDevices from '@/compositions/useDevices';  
-  import { ref, defineProps, defineEmits, computed, watch } from 'vue';
+  import { ref, computed, watch } from 'vue';
 
   const { deviceStatus } = useDevices();
   const hasData = computed(() => deviceStatus?.value?.length > 0);

@@ -1,14 +1,15 @@
 <template>
-  <Pie v-if="hasData" :data="chartData" :options="chartOptions" />
+  <Pie v-if="hasData" :data="chartData" :options="chartOptions" :plugins="pluginArray" />
 </template>
   
 <script setup>
   import { computed } from 'vue';
-  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+  import { Chart as ChartJS, ArcElement, Tooltip, Legend, plugins } from 'chart.js'
   import { Pie } from 'vue-chartjs'
   import useDevices from '@/compositions/useDevices';
 
-  ChartJS.register(ArcElement, Tooltip, Legend)
+
+  ChartJS.register(ArcElement, Tooltip, Legend, plugins)
 
   const { deviceStatus } = useDevices();
 
@@ -41,7 +42,29 @@
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false
-  }
+    maintainAspectRatio: false,
+    plugins: {
+      datalabels: true
+    }
+  }  
+
+  const pluginArray = [{
+    datalabels: {
+      formatter: (value, ctx) => {
+        console.log('============ HEREEEE')
+      
+        let sum = 0;
+        let dataArr = ctx.chart.data.datasets[0].data;
+        dataArr.map(data => {
+            sum += data;
+        });
+        let percentage = (value*100 / sum).toFixed(2)+"%";
+        return percentage;
+      },
+      color: '#fff'
+    }
+  }]
+  
+
 </script>
   

@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const serverUrl = 'http://localhost:8080'; // move to .env
 
@@ -50,6 +50,7 @@ const searchDeviceStatus = async ({ deviceId, startDate, endDate }) => {
     }
 }
 
+const hasChartData = computed(() => deviceStatus?.value?.length > 0);
 
 const searchStatusCount = async ({ deviceId, startDate, endDate }) => {
 
@@ -82,6 +83,7 @@ export default function useDevices() {
     deviceList,
     deviceStatus,
     searchDeviceStatus,
-    searchStatusCount
+    searchStatusCount,
+    hasChartData
   }
 }
