@@ -28,7 +28,6 @@ const searchDeviceStatus = async ({ deviceId, startDate, endDate }) => {
 
     // Handle the response here
     const data = await response.json();
-    console.log(data);
     deviceStatus.value = data;
   } catch (error) {
       console.error('Error:', error);
@@ -69,7 +68,6 @@ const searchStatusCount = async ({ deviceId, startDate, endDate }) => {
 
     // Handle the response here
     const data = await response.json();
-    console.log(data);
     deviceStatus.countValue = data;
   } catch (error) {
       console.error('Error:', error);

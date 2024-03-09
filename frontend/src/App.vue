@@ -47,6 +47,6 @@
 
 <style scoped>
   .chart {
-    border: 1px solid #151515;
+    border: 3px groove #1a6058;
   }
 </style>

@@ -1,9 +1,11 @@
-DeviceStatusPercentageChart<template>
-  <Line v-if="hasData" :data="chartData" :options="chartOptions" />
+<template>
+  <div style="width: 90vw; height: 90vh;">
+    <Line v-if="hasData" :data="chartData" :options="chartOptions" />
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,8 +16,10 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
-import { Line } from 'vue-chartjs'
+import { Line } from 'vue-chartjs';
 import useDevices from '@/compositions/useDevices';
+
+const chartKey = ref(0);
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +39,8 @@ const chartData = computed(() => {
   if (!hasData.value) {
     return null;
   }
+
+  chartKey.value += 1;
 
   return {
     labels : deviceStatus.value.map(status => `${status.start}  -  ${status.end}`),

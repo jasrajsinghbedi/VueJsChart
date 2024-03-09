@@ -1,9 +1,11 @@
 <template>
-  <Pie v-if="hasData" :data="chartData" :options="chartOptions" :plugins="pluginArray" />
+  <div style="width: 90vw; height: 90vh;">
+    <Pie v-if="hasData" :data="chartData" :options="chartOptions" />
+  </div>
 </template>
   
 <script setup>
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { Chart as ChartJS, ArcElement, Tooltip, Legend, plugins } from 'chart.js'
   import { Pie } from 'vue-chartjs'
   import useDevices from '@/compositions/useDevices';
@@ -12,6 +14,7 @@
   ChartJS.register(ArcElement, Tooltip, Legend, plugins)
 
   const { deviceStatus } = useDevices();
+  const chartKey = ref(0);
 
   const hasData = computed(() => deviceStatus?.value?.length > 0);
 
@@ -30,12 +33,18 @@
     if (!hasData.value) {
       return null;
     }
+
+    chartKey.value += 1;
+
+    const total = Object.values(deviceStatus?.countValue || {}).reduce((sum, value) => sum + value, 0);
+    const percentageData = Object.values(deviceStatus?.countValue || {}).map(value => ((value / total) * 100).toFixed(2));
+
     return {
       labels: Object.keys(deviceStatus?.countValue || {}),
       datasets: [
         {
           backgroundColor: generateRandomColors(Object.keys(deviceStatus?.countValue || {})?.length || 0),
-          data: Object.values(deviceStatus?.countValue || {})
+          data: percentageData
         }
       ]};
   });
@@ -44,27 +53,16 @@
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      datalabels: true
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || '';
+            const value = context.formattedValue || '';
+            return `${label}: ${value}%`;
+          },
+        },
+      }
     }
-  }  
-
-  const pluginArray = [{
-    datalabels: {
-      formatter: (value, ctx) => {
-        console.log('============ HEREEEE')
-      
-        let sum = 0;
-        let dataArr = ctx.chart.data.datasets[0].data;
-        dataArr.map(data => {
-            sum += data;
-        });
-        let percentage = (value*100 / sum).toFixed(2)+"%";
-        return percentage;
-      },
-      color: '#fff'
-    }
-  }]
-  
-
+  }
 </script>
   
