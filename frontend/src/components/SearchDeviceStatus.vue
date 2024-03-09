@@ -8,11 +8,11 @@
       </select>
     </span>
     <span class="search-item">
-      <label>Start date:</label>
+      <label>Start TimeStamp:</label>
       <flat-pickr v-model="startDate" :config="datePickerConfig"/>
     </span>
     <span class="search-item">
-      <label>End date:</label>
+      <label>End TimeStamp:</label>
       <flat-pickr v-model="endDate" :config="datePickerConfig"/>
     </span>
     <button :disabled="!searchButtonEnabled" @click="doSearch()">Search <Spinner v-if="loading" :size="12"/></button>
@@ -27,9 +27,10 @@
   import Spinner from './icons/Spinner.vue';
   import useDevices from '../compositions/useDevices'
 
-  const { deviceList, searchDeviceStatus } = useDevices();
+  const { deviceList, searchDeviceStatus, searchStatusCount } = useDevices();
   const datePickerConfig = {
     enableTime: true,
+    time_24hr: true
   };
 
   const deviceId = ref(null);
@@ -41,13 +42,20 @@
   const searchButtonEnabled = computed(() => deviceId.value && startDate.value && endDate.value && !loading.value);
 
   const doSearch = async () => {
-    try {
-      loading.value = true;
-      await searchDeviceStatus({
+   try {
+    loading.value = true;
+    await Promise.all([
+      searchDeviceStatus({
         deviceId: deviceId.value,
         startDate: startDate.value,
         endDate: endDate.value,
-      });
+      }),
+      searchStatusCount({
+        deviceId: deviceId.value,
+        startDate: startDate.value,
+        endDate: endDate.value,
+      }),
+    ]);
     } finally {
       loading.value = false;
     }
