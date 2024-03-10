@@ -36,7 +36,7 @@ public class ChartDataController {
             @RequestParam(name = "deviceId") String deviceId,
             @RequestParam(name = "unixStartDateTime") String unixStartDateTime,
             @RequestParam(name = "unixEndDateTime") String unixEndDateTime
-    ) {
+    ) throws Exception {
         return chartDataService.getRangeDate(deviceId, unixStartDateTime , unixEndDateTime);
     }
 
@@ -64,7 +64,7 @@ public class ChartDataController {
             @RequestParam(name = "deviceId") String deviceId,
             @RequestParam(name = "unixStartDateTime") String unixStartDateTime,
             @RequestParam(name = "unixEndDateTime") String unixEndDateTime
-    ) {
+    ) throws Exception {
         return chartDataService.getStatusCount(deviceId, unixStartDateTime , unixEndDateTime);
     }
 }
