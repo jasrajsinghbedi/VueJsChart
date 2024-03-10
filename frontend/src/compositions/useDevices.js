@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 
-const serverUrl = 'http://localhost:8080'; // move to .env
+const serverUrl = 'http://localhost:8080';
 
 const deviceList = ref([]);
 const deviceStatus = ref(null);
@@ -19,7 +19,7 @@ const searchDeviceStatus = async ({ deviceId, startDate, endDate }) => {
   try {
     const queryString = `?deviceId=${encodeURIComponent(deviceId)}&unixStartDateTime=${encodeURIComponent(unixStartDateTime)}&unixEndDateTime=${encodeURIComponent(unixEndDateTime)}`;
 
-    const response = await fetch(`${serverUrl}/device/status${queryString}`, {
+    const response = await fetch(`${serverUrl}/device/load${queryString}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ const searchDeviceStatus = async ({ deviceId, startDate, endDate }) => {
 
   const fetchDevices = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/devices`);
+      const response = await fetch(`${serverUrl}/devices`);
       
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
