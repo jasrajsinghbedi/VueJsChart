@@ -1,4 +1,4 @@
-# GUIDEWHEEL APP
+# VueJs Chart
 
 
 This is a dashboard to display charts related to data captured by the guide wheel devices.
